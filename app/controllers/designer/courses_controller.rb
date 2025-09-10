@@ -5,7 +5,8 @@ class Designer::CoursesController < ApplicationController
 
   # GET /designer/courses
   def index
-    @courses = current_user.courses.includes(:lessons).order(created_at: :desc)
+    # TODO: Replace with current_user.courses when authentication is implemented
+    @courses = Course.includes(:lessons).order(created_at: :desc)
   end
 
   # GET /designer/courses/1
@@ -15,12 +16,14 @@ class Designer::CoursesController < ApplicationController
 
   # GET /designer/courses/new
   def new
-    @course = current_user.courses.build
+    # TODO: Replace with current_user.courses.build when authentication is implemented
+    @course = Course.new
   end
 
   # POST /designer/courses
   def create
-    @course = current_user.courses.build(course_params)
+    # TODO: Replace with current_user.courses.build when authentication is implemented
+    @course = Course.new(course_params)
 
     if @course.save
       redirect_to designer_course_path(@course), notice: "Course was successfully created."

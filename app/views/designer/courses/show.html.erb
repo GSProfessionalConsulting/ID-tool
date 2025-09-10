@@ -1,0 +1,108 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900"><%= @course.title %></h1>
+      <p class="text-gray-600 mt-2"><%= @course.description %></p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to "Edit Course", edit_designer_course_path(@course), 
+          class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+      <%= link_to "Back to Courses", designer_courses_path, 
+          class: "bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Course Info -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Course Details</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-sm font-medium text-gray-500">Status:</span>
+            <span class="px-2 py-1 text-xs rounded-full <%= @course.status == 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+              <%= @course.status.humanize %>
+            </span>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Total Lessons:</span>
+            <span class="text-gray-900"><%= @course.total_lessons %></span>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Created:</span>
+            <span class="text-gray-900"><%= @course.created_at.strftime("%B %d, %Y") %></span>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Last Updated:</span>
+            <span class="text-gray-900"><%= time_ago_in_words(@course.updated_at) %> ago</span>
+          </div>
+        </div>
+        
+        <div class="mt-6 pt-6 border-t border-gray-200">
+          <div class="flex gap-2">
+            <% if @course.draft? %>
+              <%= link_to "Preview", designer_course_preview_path(@course), 
+                  class: "text-purple-600 hover:text-purple-800 font-medium text-sm" %>
+            <% end %>
+            <%= link_to "Export", designer_course_export_path(@course), 
+                class: "text-gray-600 hover:text-gray-800 font-medium text-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lessons List -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-lg font-semibold text-gray-900">Lessons</h3>
+          <%= link_to "Add Lesson", new_designer_course_lesson_path(@course), 
+              class: "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm" %>
+        </div>
+
+        <% if @lessons.any? %>
+          <div class="space-y-4">
+            <% @lessons.each_with_index do |lesson, index| %>
+              <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
+                        Lesson <%= index + 1 %>
+                      </span>
+                      <span class="px-2 py-1 text-xs rounded-full <%= lesson.lesson_type == 'content' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800' %>">
+                        <%= lesson.lesson_type.humanize %>
+                      </span>
+                    </div>
+                    <h4 class="text-lg font-medium text-gray-900 mb-2"><%= lesson.title %></h4>
+                    <div class="text-sm text-gray-500">
+                      <%= lesson.content_blocks.count %> content blocks
+                    </div>
+                  </div>
+                  <div class="flex gap-2 ml-4">
+                    <%= link_to "View", designer_course_lesson_path(@course, lesson), 
+                        class: "text-blue-600 hover:text-blue-800 font-medium text-sm" %>
+                    <%= link_to "Edit", edit_designer_course_lesson_path(@course, lesson), 
+                        class: "text-green-600 hover:text-green-800 font-medium text-sm" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-8">
+            <div class="text-gray-400 mb-4">
+              <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h4 class="text-lg font-medium text-gray-900 mb-2">No lessons yet</h4>
+            <p class="text-gray-600 mb-4">Add your first lesson to get started</p>
+            <%= link_to "Add First Lesson", new_designer_course_lesson_path(@course), 
+                class: "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

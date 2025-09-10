@@ -67,7 +67,7 @@
   <div class="flex justify-between items-center">
     <% if @previous_lesson %>
       <%= link_to "← Previous: #{@previous_lesson.title}", 
-          learn_lesson_path(@course, @previous_lesson),
+          public_lesson_path(@course, @previous_lesson),
           class: "bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors" %>
     <% else %>
       <div></div>
@@ -75,10 +75,10 @@
     
     <% if @next_lesson %>
       <%= link_to "Next: #{@next_lesson.title} →", 
-          learn_lesson_path(@course, @next_lesson),
+          public_lesson_path(@course, @next_lesson),
           class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
     <% else %>
-      <%= link_to "Complete Course", learn_course_path(@course),
+      <%= link_to "Complete Course", public_course_path(@course),
           class: "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors" %>
     <% end %>
   </div>
