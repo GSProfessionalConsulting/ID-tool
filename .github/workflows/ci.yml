@@ -13,18 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install mise
-        uses: jdx/mise-action@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          version: latest
-
-      - name: Install Ruby and dependencies
-        run: |
-          mise install
-          mise exec -- bundle install
+          ruby-version: 3.4.5
+          bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: mise exec -- bin/brakeman --no-pager
+        run: bin/brakeman --no-pager
 
   scan_js:
     runs-on: ubuntu-latest
@@ -33,18 +29,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install mise
-        uses: jdx/mise-action@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          version: latest
-
-      - name: Install Ruby and dependencies
-        run: |
-          mise install
-          mise exec -- bundle install
+          ruby-version: 3.4.5
+          bundler-cache: true
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: mise exec -- bin/importmap audit
+        run: bin/importmap audit
 
   lint:
     runs-on: ubuntu-latest
@@ -52,18 +44,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install mise
-        uses: jdx/mise-action@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          version: latest
-
-      - name: Install Ruby and dependencies
-        run: |
-          mise install
-          mise exec -- bundle install
+          ruby-version: 3.4.5
+          bundler-cache: true
 
       - name: Lint code for consistent style
-        run: mise exec -- bin/rubocop -f github
+        run: bin/rubocop -f github
 
   test:
     runs-on: ubuntu-latest
@@ -91,22 +79,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install mise
-        uses: jdx/mise-action@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          version: latest
-
-      - name: Install Ruby and dependencies
-        run: |
-          mise install
-          mise exec -- bundle install
+          ruby-version: 3.4.5
+          bundler-cache: true
 
       - name: Run tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # REDIS_URL: redis://localhost:6379/0
-        run: mise exec -- bin/rails db:test:prepare test test:system
+        run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4

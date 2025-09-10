@@ -32,6 +32,11 @@ A Ruby on Rails 8.0.2 web application for creating and managing instructional de
 
 **Current state: All infrastructure complete, ready for user-facing features! 🚀**
 
+## 🔧 FUTURE IMPROVEMENTS
+**Technical debt to address later:**
+
+- **🔄 Single source of truth for Ruby version** - Currently using both `mise.toml` and `.ruby-version`. Should implement proper mise integration in CI to eliminate duplication and ensure version consistency between local development and CI environments.
+
 ## Architecture
 
 ### Models
