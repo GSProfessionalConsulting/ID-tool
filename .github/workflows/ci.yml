@@ -38,10 +38,11 @@ jobs:
       - name: Check JavaScript dependencies
         run: |
           # Rails 8 with importmap-rails doesn't have traditional JS dependencies to audit
-          # Check if importmap is properly configured
+          # Check if importmap configuration is properly set up
           if [ -f "config/importmap.rb" ]; then
             echo "✅ Importmap configuration found"
-            cat config/importmap.rb
+            echo "Rails 8 uses importmap-rails for JavaScript management"
+            echo "No traditional npm/yarn dependencies to audit"
           else
             echo "❌ No importmap configuration found"
             exit 1
