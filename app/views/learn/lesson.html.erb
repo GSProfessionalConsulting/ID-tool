@@ -22,7 +22,7 @@
             <% case block.block_type %>
             <% when 'text' %>
               <div class="prose max-w-none">
-                <%= raw block.parsed_content['text'] %>
+                <%= sanitize(block.parsed_content['text'], tags: %w[h1 h2 h3 h4 h5 h6 p br strong em ul ol li a img], attributes: %w[href src alt]) %>
               </div>
             <% when 'media' %>
               <div class="text-center">
