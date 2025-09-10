@@ -12,6 +12,25 @@ A Ruby on Rails 8.0.2 web application for creating and managing instructional de
 - [x] Tests passing (7 tests, 7 assertions, 0 failures)
 - [x] Git repository set up and synced with GitHub
 - [x] CI/CD pipeline configured
+- [x] **Security-focused URL structure implemented** (Sep 10, 2025):
+  - `/designer/courses` - For instructional designers (full CRUD access)
+  - `/learn/course/:id` - For learners (view-only, single URL navigation)  
+  - `/course/:id` - For public sharing (no auth required)
+- [x] **All controllers built** (Designer::CoursesController, LearnController, PublicController, HomeController)
+- [x] **Basic view templates** for core functionality
+- [x] **Rails master key secured** (properly added to .gitignore)
+
+## 🛌 NEXT SESSION PRIORITIES
+**Ready to tackle when you return:**
+
+1. **🧪 Test the application** - Start Rails server (`rails server`) and validate all URL routes work
+2. **🔐 Add user authentication** - Implement Devise gem for login/signup functionality  
+3. **📝 Build detailed forms** - Course creation, lesson editing, content block management interfaces
+4. **🎨 Enhance styling** - Professional UI with Tailwind CSS components and improved UX
+5. **👤 Add user permissions** - Ensure designers only see their own courses (current_user scoping)
+6. **📊 Implement course publishing** - Draft → Review → Published workflow with proper state management
+
+**Current state: All infrastructure complete, ready for user-facing features! 🚀**
 
 ## Architecture
 

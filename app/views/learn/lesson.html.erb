@@ -1,0 +1,72 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Course Header -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2"><%= @course.title %></h1>
+    <p class="text-gray-600 mb-4"><%= @course.description %></p>
+    
+    <!-- Progress indicator -->
+    <div class="flex items-center justify-between text-sm text-gray-500">
+      <span>Lesson <%= @lesson.position %> of <%= @lessons.count %></span>
+      <span><%= @lesson.title %></span>
+    </div>
+  </div>
+
+  <!-- Lesson Content -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-4"><%= @lesson.title %></h2>
+    
+    <% if @content_blocks.any? %>
+      <div class="space-y-6">
+        <% @content_blocks.each do |block| %>
+          <div class="border-l-4 border-blue-500 pl-4">
+            <% case block.block_type.name %>
+            <% when 'text' %>
+              <div class="prose max-w-none">
+                <%= simple_format(block.content) %>
+              </div>
+            <% when 'media' %>
+              <div class="text-center">
+                <p class="text-gray-600 mb-2">Media Content</p>
+                <div class="bg-gray-100 p-8 rounded-lg">
+                  <p class="text-gray-500">Media block: <%= block.content %></p>
+                </div>
+              </div>
+            <% when 'interactive' %>
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <h4 class="font-medium text-blue-900 mb-2">Interactive Activity</h4>
+                <p class="text-blue-800"><%= block.content %></p>
+              </div>
+            <% when 'assessment' %>
+              <div class="bg-green-50 p-4 rounded-lg">
+                <h4 class="font-medium text-green-900 mb-2">Assessment</h4>
+                <p class="text-green-800"><%= block.content %></p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 italic">No content blocks available for this lesson.</p>
+    <% end %>
+  </div>
+
+  <!-- Navigation -->
+  <div class="flex justify-between items-center">
+    <% if @previous_lesson %>
+      <%= link_to "← Previous: #{@previous_lesson.title}", 
+          learn_lesson_path(@course, @previous_lesson),
+          class: "bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors" %>
+    <% else %>
+      <div></div>
+    <% end %>
+    
+    <% if @next_lesson %>
+      <%= link_to "Next: #{@next_lesson.title} →", 
+          learn_lesson_path(@course, @next_lesson),
+          class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+    <% else %>
+      <%= link_to "Complete Course", learn_course_path(@course),
+          class: "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors" %>
+    <% end %>
+  </div>
+</div>

@@ -32,6 +32,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Ignore credentials file
+config/credentials.yml.enc
+
 # Ignore application configuration
 /config/application.yml
 
@@ -68,3 +71,4 @@ yarn-debug.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+config/credentials.yml.enc

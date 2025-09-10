@@ -1,0 +1,53 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">ID Tool</h1>
+    <p class="text-xl text-gray-600 mb-8">Create and share interactive instructional design courses</p>
+    
+    <div class="flex justify-center gap-4">
+      <%= link_to "Browse Courses", learn_catalog_path, 
+          class: "bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors" %>
+      <%= link_to "Create Course", designer_courses_path, 
+          class: "bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors" %>
+    </div>
+  </div>
+
+  <% if @featured_courses.any? %>
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Featured Courses</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @featured_courses.each do |course| %>
+          <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2"><%= course.title %></h3>
+            <p class="text-gray-600 mb-4"><%= truncate(course.description, length: 100) %></p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-500"><%= course.total_lessons %> lessons</span>
+              <%= link_to "View Course", public_course_path(course), 
+                  class: "text-blue-600 hover:text-blue-800 font-medium" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @my_courses&.any? %>
+    <div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">My Recent Courses</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @my_courses.each do |course| %>
+          <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2"><%= course.title %></h3>
+            <p class="text-gray-600 mb-4"><%= truncate(course.description, length: 100) %></p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-500">
+                <%= course.status.humanize %> • <%= course.total_lessons %> lessons
+              </span>
+              <%= link_to "Manage", designer_course_path(course), 
+                  class: "text-green-600 hover:text-green-800 font-medium" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
