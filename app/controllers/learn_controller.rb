@@ -1,7 +1,7 @@
 class LearnController < ApplicationController
-  before_action :set_course, only: [:course, :lesson]
-  before_action :ensure_course_published, only: [:course, :lesson]
-  before_action :set_lesson, only: [:lesson]
+  before_action :set_course, only: [ :course, :lesson ]
+  before_action :ensure_course_published, only: [ :course, :lesson ]
+  before_action :set_lesson, only: [ :lesson ]
 
   # GET /learn/catalog
   def catalog
@@ -12,7 +12,7 @@ class LearnController < ApplicationController
   def course
     @lessons = @course.lessons.includes(:content_blocks).order(:position)
     @current_lesson = @lessons.first
-    
+
     # Redirect to first lesson if available
     if @current_lesson
       redirect_to learn_lesson_path(@course, @current_lesson)
@@ -25,7 +25,7 @@ class LearnController < ApplicationController
   def lesson
     @lessons = @course.lessons.includes(:content_blocks).order(:position)
     @content_blocks = @lesson.content_blocks.includes(:block_type).order(:position)
-    
+
     # Navigation helpers
     @previous_lesson = @lesson.previous_lesson
     @next_lesson = @lesson.next_lesson
@@ -43,7 +43,7 @@ class LearnController < ApplicationController
 
   def ensure_course_published
     unless @course.published?
-      redirect_to learn_catalog_path, alert: 'This course is not available.'
+      redirect_to learn_catalog_path, alert: "This course is not available."
     end
   end
 end

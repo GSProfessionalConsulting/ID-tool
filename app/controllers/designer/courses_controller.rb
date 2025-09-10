@@ -1,7 +1,7 @@
 class Designer::CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :preview, :export, :publish]
-  before_action :ensure_designer_access, only: [:index, :new, :create]
-  before_action :ensure_course_ownership, only: [:show, :edit, :update, :destroy, :preview, :export, :publish]
+  before_action :set_course, only: [ :show, :edit, :update, :destroy, :preview, :export, :publish ]
+  before_action :ensure_designer_access, only: [ :index, :new, :create ]
+  before_action :ensure_course_ownership, only: [ :show, :edit, :update, :destroy, :preview, :export, :publish ]
 
   # GET /designer/courses
   def index
@@ -21,9 +21,9 @@ class Designer::CoursesController < ApplicationController
   # POST /designer/courses
   def create
     @course = current_user.courses.build(course_params)
-    
+
     if @course.save
-      redirect_to designer_course_path(@course), notice: 'Course was successfully created.'
+      redirect_to designer_course_path(@course), notice: "Course was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class Designer::CoursesController < ApplicationController
   # PATCH/PUT /designer/courses/1
   def update
     if @course.update(course_params)
-      redirect_to designer_course_path(@course), notice: 'Course was successfully updated.'
+      redirect_to designer_course_path(@course), notice: "Course was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,13 +45,13 @@ class Designer::CoursesController < ApplicationController
   # DELETE /designer/courses/1
   def destroy
     @course.destroy
-    redirect_to designer_courses_path, notice: 'Course was successfully deleted.'
+    redirect_to designer_courses_path, notice: "Course was successfully deleted."
   end
 
   # GET /designer/courses/1/preview
   def preview
     @lessons = @course.lessons.includes(:content_blocks).order(:position)
-    render layout: 'learner'
+    render layout: "learner"
   end
 
   # GET /designer/courses/1/export
@@ -66,9 +66,9 @@ class Designer::CoursesController < ApplicationController
   # POST /designer/courses/1/publish
   def publish
     if @course.update(status: :published)
-      redirect_to designer_course_path(@course), notice: 'Course was successfully published.'
+      redirect_to designer_course_path(@course), notice: "Course was successfully published."
     else
-      redirect_to designer_course_path(@course), alert: 'Failed to publish course.'
+      redirect_to designer_course_path(@course), alert: "Failed to publish course."
     end
   end
 
