@@ -1,4 +1,5 @@
 class Course < ApplicationRecord
+  belongs_to :user
   has_many :lessons, dependent: :destroy
 
   enum :status, { draft: 0, published: 1, archived: 2 }
