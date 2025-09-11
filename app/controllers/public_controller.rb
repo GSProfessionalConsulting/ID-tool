@@ -19,7 +19,7 @@ class PublicController < ApplicationController
   # GET /course/:course_id/lesson/:lesson_id
   def lesson
     @lessons = @course.lessons.includes(:content_blocks).order(:position)
-    @content_blocks = @lesson.content_blocks.includes(:block_type).order(:position)
+    @content_blocks = @lesson.content_blocks.order(:position)
 
     # Navigation helpers
     @previous_lesson = @lesson.previous_lesson

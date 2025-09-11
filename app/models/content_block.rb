@@ -1,8 +1,9 @@
 class ContentBlock < ApplicationRecord
   belongs_to :lesson
 
-  validates :block_type, presence: true
-  validates :position, presence: true, uniqueness: { scope: :lesson_id }
+  validates :block_type, presence: true, inclusion: { in: %w[text media interactive assessment] }
+  validates :position, presence: true, uniqueness: { scope: :lesson_id }, numericality: { greater_than: 0, only_integer: true }
+  validates :content, presence: true
 
   scope :ordered, -> { order(:position) }
 

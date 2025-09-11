@@ -4,8 +4,9 @@ class Lesson < ApplicationRecord
 
   enum :lesson_type, { content: 0, assessment: 1 }
 
-  validates :title, presence: true
-  validates :position, presence: true, uniqueness: { scope: :course_id }
+  validates :title, presence: true, length: { minimum: 3, maximum: 255 }
+  validates :position, presence: true, uniqueness: { scope: :course_id }, numericality: { greater_than: 0, only_integer: true }
+  validates :lesson_type, presence: true
 
   scope :ordered, -> { order(:position) }
 
