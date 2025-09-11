@@ -1,13 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  course: one
-  title: MyString
-  lesson_type: 1
+html_basics:
+  course: web_development
+  title: "HTML Fundamentals"
+  lesson_type: "content"
   position: 1
 
-two:
-  course: two
-  title: MyString
-  lesson_type: 1
+css_styling:
+  course: web_development
+  title: "CSS Styling Basics"
+  lesson_type: "content"
+  position: 2
+
+ruby_intro:
+  course: ruby_course
+  title: "Introduction to Ruby"
+  lesson_type: "content"
   position: 1

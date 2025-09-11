@@ -5,8 +5,7 @@ class Designer::CoursesController < ApplicationController
 
   # GET /designer/courses
   def index
-    # TODO: Replace with current_user.courses when authentication is implemented
-    @courses = Course.includes(:lessons).order(created_at: :desc)
+    @courses = current_user.courses.includes(:lessons).order(created_at: :desc)
   end
 
   # GET /designer/courses/1
@@ -16,14 +15,12 @@ class Designer::CoursesController < ApplicationController
 
   # GET /designer/courses/new
   def new
-    # TODO: Replace with current_user.courses.build when authentication is implemented
-    @course = Course.new
+    @course = current_user.courses.build
   end
 
   # POST /designer/courses
   def create
-    # TODO: Replace with current_user.courses.build when authentication is implemented
-    @course = Course.new(course_params)
+    @course = current_user.courses.build(course_params)
 
     if @course.save
       redirect_to designer_course_path(@course), notice: "Course was successfully created."
@@ -94,12 +91,11 @@ class Designer::CoursesController < ApplicationController
   end
 
   def ensure_designer_access
-    # TODO: Implement authentication check
-    # redirect_to root_path unless current_user&.designer?
+    authenticate_user!
+    redirect_to root_path, alert: "Access denied. Designer role required." unless current_user.designer?
   end
 
   def ensure_course_ownership
-    # TODO: Implement ownership check
-    # redirect_to designer_courses_path unless @course.user == current_user
+    redirect_to designer_courses_path, alert: "Access denied. You can only manage your own courses." unless @course.user == current_user || current_user.admin?
   end
 end

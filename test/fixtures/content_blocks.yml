@@ -1,13 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  lesson: one
-  block_type: MyString
+html_intro_text:
+  lesson: html_basics
+  block_type: "text"
   position: 1
-  content: MyText
+  content: '{"text": "<h1>Welcome to HTML</h1><p>HTML is the foundation of web development.</p>"}'
 
-two:
-  lesson: two
-  block_type: MyString
+css_intro_text:
+  lesson: css_styling
+  block_type: "text"
   position: 1
-  content: MyText
+  content: '{"text": "<h1>CSS Basics</h1><p>Learn how to style your HTML elements.</p>"}'
+
+ruby_intro_text:
+  lesson: ruby_intro
+  block_type: "text"
+  position: 1
+  content: '{"text": "<h1>Ruby Introduction</h1><p>Ruby is a beautiful programming language.</p>"}'

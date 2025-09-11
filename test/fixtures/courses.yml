@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  description: MyText
-  status: 1
+web_development:
+  title: "Introduction to Web Development"
+  description: "Learn the basics of HTML, CSS, and JavaScript"
+  status: "published"
+  user: designer_user
 
-two:
-  title: MyString
-  description: MyText
-  status: 1
+ruby_course:
+  title: "Ruby Programming Fundamentals"
+  description: "Master the Ruby programming language from basics to advanced"
+  status: "draft"
+  user: designer_user

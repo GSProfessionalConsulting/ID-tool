@@ -1,4 +1,5 @@
 class LearnController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_course, only: [ :course, :lesson ]
   before_action :ensure_course_published, only: [ :course, :lesson ]
   before_action :set_lesson, only: [ :lesson ]
