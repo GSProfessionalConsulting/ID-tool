@@ -47,8 +47,11 @@ class Designer::CoursesController < ApplicationController
 
   # DELETE /designer/courses/1
   def destroy
-    @course.destroy
-    redirect_to designer_courses_path, notice: "Course was successfully deleted."
+    if @course.destroy
+      redirect_to designer_courses_path, notice: "Course was successfully deleted."
+    else
+      redirect_to designer_course_path(@course), alert: "Failed to delete course. Please try again."
+    end
   end
 
   # GET /designer/courses/1/preview
@@ -82,7 +85,12 @@ class Designer::CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:title, :description, :status, :learning_objectives, :target_audience, :estimated_duration)
+    params.require(:course).permit(:title, :description, :status, :learning_objectives, :target_audience, :estimated_duration).tap do |allowed_params|
+      # Ensure status is valid if provided
+      if allowed_params[:status].present? && !Course.statuses.key?(allowed_params[:status])
+        allowed_params.delete(:status)
+      end
+    end
   end
 
   def ensure_designer_access

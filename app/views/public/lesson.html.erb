@@ -22,13 +22,17 @@
             <% case block.block_type %>
             <% when 'text' %>
               <div class="prose max-w-none">
-                <%= sanitize(block.parsed_content['text'], tags: %w[h1 h2 h3 h4 h5 h6 p br strong em ul ol li a img], attributes: %w[href src alt]) %>
+                <%= sanitize(block.parsed_content['text'], 
+                    tags: %w[h1 h2 h3 h4 h5 h6 p br strong em ul ol li a img blockquote code pre],
+                    attributes: %w[href src alt title],
+                    protocols: %w[http https mailto],
+                    remove_empty_elements: true) %>
               </div>
             <% when 'media' %>
               <div class="text-center">
                 <% content = block.parsed_content %>
-                <% if content['media_type'] == 'image' %>
-                  <img src="<%= content['url'] %>" alt="<%= content['alt_text'] %>" class="max-w-full h-auto rounded-lg">
+                <% if content['media_type'] == 'image' && content['url']&.match?(/\A(https?:\/\/|\/)/i) %>
+                  <img src="<%= content['url'] %>" alt="<%= h(content['alt_text']) %>" class="max-w-full h-auto rounded-lg">
                 <% else %>
                   <div class="bg-gray-100 p-8 rounded-lg">
                     <p class="text-gray-500">Media: <%= content['media_type'] %></p>
